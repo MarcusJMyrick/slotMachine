@@ -8,20 +8,31 @@ rows = 3
 cols = 3
 
 symbol_count = {
-    "A": 2,
-    "B": 4,
+    "A": 10,
+    "B": 8,
     "C": 6,
-    "D": 8,
-    "E": 10,
+    "D": 4,
+    "E": 3,
 
 }
+
+def checkWinnings(columns, lines, bet, values):
+    winnings = 0
+    for line in range(lines):
+        symbol = columns[0][line]
+        for column in columns:
+            symbolToCheck = column[line]
+            if symbolToCheck != symbol:
+                break
+        else:
+            winnings += values[symbol] * bet
+    return winnings
 
 def getSlotMachineSpin(rows, cols, symbols):
     allSymbols = []
     for symbol, symbol_count in symbols.items():
         for i in range(symbol_count):
             allSymbols.append(symbol)
-    
     columns = []
     for _ in range(cols):
         column = []
@@ -33,8 +44,18 @@ def getSlotMachineSpin(rows, cols, symbols):
         
         columns.append(column)
         
+    return columns
+        
 def printSlotMachine(columns):
-    
+    for row in range(len(columns[0])):
+        for i, column in enumerate(columns):
+            if i != len(columns) - 1:
+                print(column[row], end= " | ")
+            else:
+                print(column[row], end="")
+
+        print()    
+        
 
 def deposit():
     while True:
@@ -92,5 +113,9 @@ def main():
             break
     print(F"You are betting ${bet} on {lines} lines. Total bet is equal to: ${total}")
 
+    slots = getSlotMachineSpin(rows, cols, symbol_count)
+    printSlotMachine(slots)
+    winnings = checkWinnings(slots, lines, bet, symbol_count)
+    print(f"You won ${winnings}")
 
 main()
