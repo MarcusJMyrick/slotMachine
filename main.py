@@ -33,7 +33,8 @@ def getSlotMachineSpin(rows, cols, symbols):
         
         columns.append(column)
         
-
+def printSlotMachine(columns):
+    
 
 def deposit():
     while True:
